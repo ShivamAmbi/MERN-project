@@ -1,4 +1,3 @@
 node_modules
 client\.env.local
 client\.next
-server\node_modules
