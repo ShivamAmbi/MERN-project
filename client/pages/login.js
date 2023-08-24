@@ -30,7 +30,7 @@ const Login = () => {
         //     res.data.ok && setSuccess(res.data.ok);
         // }).catch((err)=> toast.error(err.response.data))
         try {
-            const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API}/login`, {
+            const { data } = await axios.post('/login', {
                 email,
                 psw,
             });;
@@ -47,7 +47,8 @@ const Login = () => {
         }
     }
 
-
+    if(state && state.token) router.push('/');
+    
     return (
         <div className="container-fluid">
             <div className="row py-5 text-light bg-login-image" >
