@@ -1,0 +1,96 @@
+import { useContext, useState } from "react";
+import axios from 'axios';
+import { toast } from "react-toastify";
+import { Modal } from 'antd';
+import Link from "next/link";
+import { UserContext } from "../context";
+import { useRouter } from "next/router";
+
+import ForgotPasswordForm from "../components/forms/forgotPasswordForm";
+
+const ForgotPassword = () => {
+    const [name,setName] = useState('');
+    const [email,setEmail] = useState('');
+    const [age,setAge] = useState('');
+    const [newPsw,setNewPsw] = useState('');
+    const [secret,setSecret] = useState('');
+    const [success,setSuccess] = useState(false);
+    const [ok,setOk] = useState(false);
+    const [loading,setLoading] = useState(false);
+    const [state] = useContext(UserContext);
+    const router = useRouter();
+
+    const handleSubmit = async(e) => {
+        e.preventDefault();
+        setLoading(true);
+        // console.log(name,email,age,psw,secret);
+        // axios.post('http://localhost:8000/api/register',{
+        //     name,
+        //     email,
+        //     age,
+        //     psw,
+        //     secret
+        // }).then((res)=>{
+        //     console.log('resp---xxx',res);
+        //     res.data.ok && setSuccess(res.data.ok);
+        // }).catch((err)=> toast.error(err.response.data))
+        try {
+            const { data } = await axios.post('/forgot-password',{
+                email,
+                newPsw,
+                secret
+            });
+            console.log('-->data:',data);
+            // data.ok && setOk(data.ok) && setLoading(false);
+            // setName('');
+            // setEmail('');
+            // setAge('');
+            // setPsw('');
+            // setSecret('');
+        } catch (e) {
+            toast.error(e.response.data);
+            setLoading(false);
+        }
+        
+    }
+
+    if(state && state.token) router.push('/');
+
+    return (
+        <div key={success.length} className="container-fluid">
+            <div className="row py-5 text-light bg-default-image" >
+                <div className="col text-center">
+                    <h1> Forgot Password</h1>
+                </div>
+            </div>
+            <div className="row py-5">
+                <div className="col-md-6 offset-md-3">
+                    <ForgotPasswordForm 
+                        handleSubmit={handleSubmit}
+                        email={email}
+                        setEmail={setEmail}
+                        newPsw={newPsw}
+                        setNewPsw={setNewPsw}
+                        secret={secret}
+                        setSecret={setSecret}
+                        loading={loading}
+                    />
+                </div>
+            </div>
+            <div className="row">
+                <div className="col">
+                    <Modal 
+                    title="Congrats" 
+                    open={ok} 
+                    onCancel={()=>setOk(false)}
+                    footer={null}
+                    >
+                        <p>Congrats, You can now login with new password.</p>
+                    </Modal>     
+                </div>     
+            </div>
+        </div>
+    )
+}
+
+export default ForgotPassword;

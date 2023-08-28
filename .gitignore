@@ -1,7 +1,4 @@
-node_modules
-server\.env
-client\.env.local
-client\.next
-.env.local
 .next
-.gitignore
+.env.local
+node_modules
+.env
