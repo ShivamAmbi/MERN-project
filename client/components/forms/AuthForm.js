@@ -66,8 +66,8 @@ const AuthForm = ({
             </div>
             </>}
             <button disabled={page != 'login' ?
-            !name || !email || !psw || !secret
-        : !email || !psw} className="btn btn-primary col-12 mb-2">
+            !name || !email || !psw || !secret || loading
+        : !email || !psw || loading} className="btn btn-primary col-12 mb-2">
                 {loading ? <SyncOutlined spin /> : page != 'login' ? "Submit" : "Login"}
             </button>
         </form>

@@ -5,7 +5,7 @@ const router = express.Router();
 //middleware 
 import { requireSignIn } from "../middlewares";
 //controller
-import { register, login, currentUser } from '../controllers/auth.js'
+import { register, login, currentUser, forgotPassword } from '../controllers/auth.js'
 // router.get();
 
 // router.post();
@@ -16,5 +16,6 @@ import { register, login, currentUser } from '../controllers/auth.js'
 router.post('/register',register);
 router.post('/login',login);
 router.get('/current-user',requireSignIn,currentUser)
+router.post('/forgot-password',forgotPassword);
 
 module.exports = router;

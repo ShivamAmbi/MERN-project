@@ -42,12 +42,19 @@ const Register = () => {
                 psw,
                 secret
             });
-            data.ok && setOk(data.ok) && setLoading(false);
-            setName('');
-            setEmail('');
-            setAge('');
-            setPsw('');
-            setSecret('');
+            if(data.error){
+                toast.error(data.error);
+                setLoading(false);
+            }else{
+                setName('');
+                setEmail('');
+                setAge('');
+                setPsw('');
+                setSecret('');
+                data.ok && setOk(data.ok);
+                setLoading(false);
+                router.push('/login');
+            }
         } catch (e) {
             toast.error(e.response.data);
             setLoading(false);

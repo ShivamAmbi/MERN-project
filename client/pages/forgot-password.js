@@ -20,40 +20,66 @@ const ForgotPassword = () => {
     const [state] = useContext(UserContext);
     const router = useRouter();
 
-    const handleSubmit = async(e) => {
-        e.preventDefault();
-        setLoading(true);
-        // console.log(name,email,age,psw,secret);
-        // axios.post('http://localhost:8000/api/register',{
-        //     name,
-        //     email,
-        //     age,
-        //     psw,
-        //     secret
-        // }).then((res)=>{
-        //     console.log('resp---xxx',res);
-        //     res.data.ok && setSuccess(res.data.ok);
-        // }).catch((err)=> toast.error(err.response.data))
-        try {
-            const { data } = await axios.post('/forgot-password',{
-                email,
-                newPsw,
-                secret
-            });
-            console.log('-->data:',data);
-            // data.ok && setOk(data.ok) && setLoading(false);
-            // setName('');
-            // setEmail('');
-            // setAge('');
-            // setPsw('');
-            // setSecret('');
-        } catch (e) {
-            toast.error(e.response.data);
-            setLoading(false);
-        }
+    // const handleSubmit = async(e) => {
+    //     e.preventDefault();
+    //     try {
+    //         setLoading(true);   
+    //         const { data } = await axios.post('/forgot-password',{
+    //             email,
+    //             newPsw,
+    //             secret
+    //         });
+    //         console.log('-->data:',data);
+    //         if(data.error){
+    //             toast.error(data.error);
+    //             setLoading(false);
+    //         }
+    //         if(data.success){
+    //             setEmail('');
+    //             setNewPsw('');
+    //             setSecret('');
+    //             setOk(true);
+    //             setLoading(false);
+    //         }
+    //     } catch (e) {
+    //         console.log('-err:',e);
+    //         toast.error(e.response.data);
+    //         setLoading(false);
+    //     }
         
-    }
+    // }
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+          // console.log(name, email, password, secret);
+          setLoading(true);
+          const { data } = await axios.post(`/forgot-password`, {
+            email,
+            newPsw,
+            secret,
+          });
+       
+          console.log("forgot password res => ", data);
+       
+          if (data.error) {
+            toast.error(data.error);
+            setLoading(false);
+          }
+       
+          if (data.success) {
+            setEmail("");
+            setNewPsw("");
+            setSecret("");
+            setOk(true);
+            setLoading(false);
+          }
+        } catch (err) {
+          console.log(err);
+          setLoading(false);
+        }
+      };
+      
     if(state && state.token) router.push('/');
 
     return (
