@@ -131,4 +131,11 @@ export const forgotPassword = async (req, res) => {
     }
 }
 
+export const createPost = async (req,res) => {
+    try {
+        
+    } catch (error) {
+        
+    }
+}
 

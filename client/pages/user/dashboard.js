@@ -1,15 +1,44 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { UserContext, UserProvider } from "../../context";
 import UserRoute from "../../components/routes/UserRoute";
+import CreatePostForm from "../../components/forms/CreatePostForm";
+import { useRouter } from "next/router";
+import axios from "axios";
 
 const Dashboard = () => {
-    const [state,setState] = useContext(UserContext)
+    const [state,setState] = useContext(UserContext);
+    //state
+    const [content,setContent]= useState('');
+    //route
+    const router =useRouter();
+
+    const postSubmit = async(e)=> {
+        e.preventDefault();
+        console.log('post--->',content);
+        try {
+            const {data} = axios.post('/create-post',{content});
+            console.log('create post resp:',data); 
+        } catch (error) {
+            console.log('err-->',error);
+        }
+    }
     return (
     <UserRoute>
-        <div className="container">
-            <div className="row">
-                <div className="col">
-                    <h1 className="display-1 text-center py-5"> Dashboard</h1>
+        <div className="container-fluid" style={{height:"985px"}}>
+            <div className="row py-5 text-light bg-login-image">
+                <div className="col text-center">
+                    <h1> News Feed</h1>
+                </div>
+            </div>
+            <div className="row py-3 ">
+                <div className="col-md-8 ">
+                <CreatePostForm
+                content={content}
+                setContent={setContent}
+                postSubmit={postSubmit}/>
+                </div>
+                <div className="col-md-4">
+                Sidebar
                 </div>
             </div>
         </div>

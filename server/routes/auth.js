@@ -15,7 +15,9 @@ import { register, login, currentUser, forgotPassword } from '../controllers/aut
 // })
 router.post('/register',register);
 router.post('/login',login);
-router.get('/current-user',requireSignIn,currentUser)
+router.get('/current-user',requireSignIn,currentUser);
 router.post('/forgot-password',forgotPassword);
+router.post('/create-post',createPost);
+
 
 module.exports = router;
