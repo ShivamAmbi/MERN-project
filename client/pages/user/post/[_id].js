@@ -1,54 +1,53 @@
-import { useContext, useEffect, useState } from "react";
-import { UserContext } from "../../context";
-import UserRoute from "../../components/routes/UserRoute";
-import PostForm from "../../components/forms/PostForm";
+import { useEffect, useState } from "react";
+import axios from 'axios';
 import { useRouter } from "next/router";
-import axios from "axios";
+import PostForm from "../../../components/forms/PostForm";
+import PostList from "../../../components/cards/postList";
+import UserRoute from "../../../components/routes/UserRoute";
 import { toast } from "react-toastify";
-import PostList from "../../components/cards/postList";
 
-const Home = () => {
-    const [state, setState] = useContext(UserContext);
-    //state
+const EditPost = () => {
+    const [post,setPost] = useState({});
     const [content, setContent] = useState('');
     const [image,setImage]=useState({});
     const [uploading,setUploading]= useState(false);
-    const [posts, setPosts] = useState([]);
-    //route
+
     const router = useRouter();
+    const _id = router.query._id;
 
     useEffect(()=>{
-        if(state && state.token) fetchUserPosts();
-    },[state && state.token]);
-    
-    const fetchUserPosts = async () => {
+        if(_id) fetchPost();
+    },[_id])
+
+    const fetchPost = async() => {
         try {
-            const { data } = await axios.get('/user-posts');
-            console.log('---posts:',data);
-            setPosts(data);
+            const { data } = await axios.get(`/user-post/${_id}`);
+            setPost(data);
+            setContent(data.content);
+            setImage(data.image);
+            console.log('data:',data);
         } catch (error) {
-            console.log('fetchUserPosts err-->',error);
+            console.log('error:',error);
         }
     }
-    
+
     const postSubmit = async (e) => {
         e.preventDefault();
-        let user_id = state.user._id
+        console.log('submit post to update:',content,image);
+
         try {
-            const { data } = await axios.post('/create-post', { content, image, user_id });
-            console.log('create post resp:', data,user_id);
-            if (data.error) {
+            const { data } = await axios.put(`/update-post/${_id}`,{content,image});
+            if (data.error){
                 toast.error(data.error);
-            } else {
-                fetchUserPosts();
-                toast.success('Post created');
-                setContent('');
-                setImage('');
+            }else{
+                toast.success('Post updated');
+                router.push('/user/dashboard');
             }
         } catch (error) {
-            console.log('err-->', error);
+            console.log('error:',error);
         }
     }
+    //in edit reupload image
     const uploadImage = async(e)=> {
         const file = e.target.files[0];
 
@@ -71,15 +70,16 @@ const Home = () => {
     }
 
     return (
-        <UserRoute>
+        <div>
+            <UserRoute>
             <div className="container-fluid" style={{ height: "985px" }}>
                 <div className="row py-5 text-light bg-login-image">
                     <div className="col text-center">
-                        <h1> News Feed</h1>
+                        <h1> Edit Page </h1>
                     </div>
                 </div>
                 <div className="row py-3 ">
-                    <div className="col-md-8 ">
+                    <div className="col-md-8 offset-md-2 ">
                         <PostForm
                             content={content}
                             setContent={setContent}
@@ -87,19 +87,12 @@ const Home = () => {
                             uploadImage={uploadImage} 
                             uploading={uploading}
                             image={image}/>
-                        <br/>
-                        <PostList posts={posts}/>
-                    </div>
-
-                    
-
-                    <div className="col-md-4">
-                        Sidebar
                     </div>
                 </div>
             </div>
         </UserRoute>
+        </div>
     )
 }
 
-export default Home;
+export default EditPost;

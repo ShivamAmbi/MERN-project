@@ -17,7 +17,7 @@ router.post('/register',register);
 router.post('/login',login);
 router.get('/current-user',requireSignIn,currentUser);
 router.post('/forgot-password',forgotPassword);
-router.post('/create-post',createPost);
+// router.post('/create-post',createPost);
 
 
 module.exports = router;
