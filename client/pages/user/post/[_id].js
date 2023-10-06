@@ -25,7 +25,6 @@ const EditPost = () => {
             setPost(data);
             setContent(data.content);
             setImage(data.image);
-            console.log('data:',data);
         } catch (error) {
             console.log('error:',error);
         }
@@ -33,8 +32,6 @@ const EditPost = () => {
 
     const postSubmit = async (e) => {
         e.preventDefault();
-        console.log('submit post to update:',content,image);
-
         try {
             const { data } = await axios.put(`/update-post/${_id}`,{content,image});
             if (data.error){
@@ -54,10 +51,8 @@ const EditPost = () => {
         const formData = new FormData();
         formData.append('image',file);
         setUploading(true);
-        // formData.append('content',content);
         try {
             const { data } = await axios.post('/upload-image',formData);
-            console.log('uploaded image data--->',data);
             setImage({
                 url: data.url,
                 public_id: data.public_id,

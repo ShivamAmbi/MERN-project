@@ -14,37 +14,58 @@ const AuthForm = ({
     setSecret,
     loading,
     page,
+    userName,
+    setUsername,
+    about
+    ,setAbout,
+    profileUpdate
 }) => (
     <form onSubmit={handleSubmit}>
-            {page !='login' && <div className="form-group mb-2 rounded-pill">
-                <small className="d-flex">
-                    <label className="text-muted"> Your Name:</label>
-                    <input type="text" className="form-control w-300" placeholder="enter name" onChange={(e) => setName(e.target.value)} value={name} />
-                </small>
-            </div>}
-            <div className="form-group mb-2 rounded-pill">
-                <small className="d-flex">
-                    <label className="text-muted"> Your email:</label>
-                    <input type="email" className="form-control w-300" placeholder="enter email" onChange={(e) => setEmail(e.target.value)} value={email} />
-                </small>
-            </div>
-            {page !='login' &&
+        {profileUpdate &&
+            <>
+                <div className="form-group mb-2 rounded-pill">
+                    <small className="d-flex">
+                        <label className="text-muted"> User Name:</label>
+                        <input type="text" className="form-control w-300" placeholder="enter username" onChange={(e) => setUsername(e.target.value)} value={userName} />
+                    </small>
+                </div>
+                <div className="form-group mb-2 rounded-pill">
+                    <small className="d-flex">
+                        <label className="text-muted">Enter About:</label>
+                        <input type="text" className="form-control w-300" placeholder="enter about" onChange={(e) => setAbout(e.target.value)} value={about} />
+                    </small>
+                </div>
+            </>
+        }
+        {page != 'login' && <div className="form-group mb-2 rounded-pill">
+            <small className="d-flex">
+                <label className="text-muted"> Your Name:</label>
+                <input type="text" className="form-control w-300" placeholder="enter name" onChange={(e) => setName(e.target.value)} value={name} />
+            </small>
+        </div>}
+        <div className="form-group mb-2 rounded-pill">
+            <small className="d-flex">
+                <label className="text-muted"> Your email:</label>
+                <input type="email" className="form-control w-300" placeholder="enter email" onChange={(e) => setEmail(e.target.value)} value={email} disabled={profileUpdate}/>
+            </small>
+        </div>
+        {page !='login' &&
             <div className="form-group mb-2 rounded-pill">
                 <small className="d-flex">
                     <label className="text-muted"> Your age:</label>
-                    <input type="text" className="form-control w-300" placeholder="enter age" onChange={(e) => setAge(e.target.value)} value={age} />
+                    <input type="number" className="form-control w-300" placeholder="enter age" onChange={(e) => setAge(e.target.value)} value={age} />
                 </small>
             </div>
-            }
-            <div className="form-group mb-2 rounded-pill">
-                <small className="d-flex">
-                    <label className="text-muted"> Your password:</label>
-                    <input type="password" className="form-control w-300" placeholder="enter password" onChange={(e) => setPsw(e.target.value)} value={psw} />
-                </small>
-            </div>
-            
+        }
+        <div className="form-group mb-2 rounded-pill">
+            <small className="d-flex">
+                <label className="text-muted"> Your password:</label>
+                <input type="password" className="form-control w-300" placeholder="enter password" onChange={(e) => setPsw(e.target.value)} value={psw} />
+            </small>
+        </div>
 
-            {page !='login' && <>
+
+        {page !='login' && <>
             <div className="form-group mb-2 rounded-pill">
                 <small className="d-flex">
                     <label className="text-muted"> Pick a question</label>
@@ -64,13 +85,13 @@ const AuthForm = ({
             <div className="form-group mb-2">
                 <input type="text" className="form-control" placeholder="Write your answer..." onChange={(e) => setSecret(e.target.value)} value={secret} />
             </div>
-            </>}
-            <button disabled={page != 'login' ?
+        </>}
+        <button disabled={profileUpdate ? loading : page != 'login' ?
             !name || !email || !psw || !secret || loading
-        : !email || !psw || loading} className="btn btn-primary col-12 mb-2">
-                {loading ? <SyncOutlined spin /> : page != 'login' ? "Submit" : "Login"}
-            </button>
-        </form>
+            : !email || !psw || loading} className="btn btn-primary col-12 mb-2">
+            {loading ? <SyncOutlined spin /> : profileUpdate ? 'Update' : page != 'login' ? "Submit" : "Login"}
+        </button>
+    </form>
 );
 
 export default AuthForm;

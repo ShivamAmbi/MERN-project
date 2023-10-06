@@ -8,7 +8,7 @@ import ReactQuill from 'react-quill';
 
 import { Avatar } from 'antd';
 import { CameraOutlined, LoadingOutlined } from '@ant-design/icons';
-
+import { imageSource } from '../../functions';
 
 
 const PostForm = ({ content, setContent, postSubmit, uploadImage, uploading, image }) => {

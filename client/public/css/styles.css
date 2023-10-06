@@ -9,13 +9,20 @@ body{
 } */
 
 .bg-default-image{
-    background-image: url('/images/pedestrians.jpg');
+    background-image: url('/images/Capture-1.JPG');
     background-size: 100%;
     height: 150px;
     text-shadow: 2px 2px 8px #000;
 }
 .bg-login-image{
     background-image: url('/images/default.jpg');
+    background-size: 100%;
+    height: 150px;
+    text-shadow: 2px 2px 8px #000;
+}
+
+.bg-home-image{
+    background-image: url('/images/autumn.jpg');
     background-size: 100%;
     height: 150px;
     text-shadow: 2px 2px 8px #000;
@@ -33,4 +40,8 @@ body{
 
 .active{
     background-color: navajowhite;
+}
+
+.pointer{
+    cursor: pointer;
 }

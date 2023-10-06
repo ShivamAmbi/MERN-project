@@ -1,8 +1,7 @@
 import { UserContext } from "../context";
-import { useEffect, useState, useContext } from "react";
+import { useState, useContext } from "react";
 import axios from 'axios';
 import { toast } from "react-toastify";
-import { Modal } from 'antd';
 import Link from "next/link";
 import {useRouter} from "next/router"
 
@@ -18,18 +17,8 @@ const Login = () => {
 
     const handleSubmit = async(e) => {
         e.preventDefault();
-        setLoading(true);
-        // axios.post('http://localhost:8000/api/register',{
-        //     name,
-        //     email,
-        //     age,
-        //     psw,
-        //     secret
-        // }).then((res)=>{
-        //     console.log('resp---xxx',res);
-        //     res.data.ok && setSuccess(res.data.ok);
-        // }).catch((err)=> toast.error(err.response.data))
         try {
+            setLoading(true);
             const { data } = await axios.post('/login', {
                 email,
                 psw,
@@ -46,7 +35,7 @@ const Login = () => {
                 })
                 //save to local storage
                 window.localStorage.setItem('auth', JSON.stringify(data));
-                router.push('/')
+                router.push('/user/dashboard')
             }
         } catch (e) {
             console.log('-e-e-e->:',e);
@@ -55,7 +44,7 @@ const Login = () => {
         }
     }
 
-    if(state && state.token) router.push('/');
+    if(state && state.token) router.push('/user/dashboard');
     
     return (
         <div className="container-fluid">
