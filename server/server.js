@@ -34,4 +34,4 @@ readdirSync('./routes').map((route)=>{
     app.use('/api',require(`./routes/${route}`));
 });
 
-app.listen(8080, () => console.log('server is running on port 8000'));
+app.listen(8000, () => console.log('server is running on port 8000'));
