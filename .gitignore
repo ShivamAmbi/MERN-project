@@ -1,7 +1,0 @@
-.next
-.env.local
-node_modules
-.env
-server/.env
-client/package-lock.json
-server/package-lock.json
