@@ -47,6 +47,10 @@ model MenuItem {
   description String?
   price       Float
   imageUrl    String?
+  ingredients String?
+  allergy     String?
+  protein     String?
+  carbs       String?
   categoryId  String
   category    Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   createdAt   DateTime @default(now())

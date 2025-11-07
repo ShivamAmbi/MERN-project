@@ -59,7 +59,7 @@ router.delete('/categories/:id', async (req, res) => {
 // Menu Items
 router.post('/menu-items', async (req, res) => {
   try {
-    const { name, description, price, imageUrl, categoryId } = req.body;
+    const { name, description, price, imageUrl, categoryId, ingredients, allergy, protein, carbs } = req.body;
     const menuItem = await prisma.menuItem.create({
       data: {
         name,
@@ -67,6 +67,10 @@ router.post('/menu-items', async (req, res) => {
         price: parseFloat(price),
         imageUrl,
         categoryId,
+        ingredients,
+        allergy,
+        protein,
+        carbs,
       },
       include: {
         category: true,
@@ -97,7 +101,7 @@ router.get('/menu-items', async (req, res) => {
 
 router.put('/menu-items/:id', async (req, res) => {
   try {
-    const { name, description, price, imageUrl, categoryId } = req.body;
+    const { name, description, price, imageUrl, categoryId, ingredients, allergy, protein, carbs } = req.body;
     const menuItem = await prisma.menuItem.update({
       where: { id: req.params.id },
       data: {
@@ -106,6 +110,10 @@ router.put('/menu-items/:id', async (req, res) => {
         price: price ? parseFloat(price) : undefined,
         imageUrl,
         categoryId,
+        ingredients,
+        allergy,
+        protein,
+        carbs,
       },
       include: {
         category: true,

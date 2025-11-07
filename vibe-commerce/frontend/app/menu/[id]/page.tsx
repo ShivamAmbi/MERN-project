@@ -56,7 +56,6 @@ export default function MenuItemPage() {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading...</p>
         </div>
       </div>
     );
@@ -104,7 +103,68 @@ export default function MenuItemPage() {
               ${item.price.toFixed(2)}
             </p>
             {item.description && (
-              <p className="text-gray-600 mb-8">{item.description}</p>
+              <p className="text-gray-600 mb-6">{item.description}</p>
+            )}
+
+            {/* Ingredients */}
+            {item.ingredients && (
+              <div className="mb-6 pb-6 border-b">
+                <h2 className="text-lg font-semibold text-gray-900 mb-2">Ingredients</h2>
+                <div className="flex flex-wrap gap-2">
+                  {item.ingredients.split(',').map((ingredient, index) => (
+                    <span
+                      key={index}
+                      className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm"
+                    >
+                      {ingredient.trim()}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Allergy Information */}
+            {item.allergy && (
+              <div className="mb-6 pb-6 border-b">
+                <h2 className="text-lg font-semibold text-gray-900 mb-2">Allergens</h2>
+                {item.allergy.toLowerCase() === 'none' ? (
+                  <span className="inline-block px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">
+                    ✓ No Allergens
+                  </span>
+                ) : (
+                  <div className="flex flex-wrap gap-2">
+                    {item.allergy.split(',').map((allergen, index) => (
+                      <span
+                        key={index}
+                        className="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm font-medium"
+                      >
+                        ⚠ {allergen.trim()}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Nutrition Information */}
+            {(item.protein || item.carbs) && (
+              <div className="mb-8 pb-6 border-b">
+                <h2 className="text-lg font-semibold text-gray-900 mb-4">Nutrition Information</h2>
+                <div className="grid grid-cols-2 gap-4">
+                  {item.protein && (
+                    <div className="bg-blue-50 p-4 rounded-lg">
+                      <p className="text-sm text-gray-600 mb-1">Protein</p>
+                      <p className="text-2xl font-bold text-blue-600">{item.protein}</p>
+                    </div>
+                  )}
+                  {item.carbs && (
+                    <div className="bg-orange-50 p-4 rounded-lg">
+                      <p className="text-sm text-gray-600 mb-1">Carbohydrates</p>
+                      <p className="text-2xl font-bold text-orange-600">{item.carbs}</p>
+                    </div>
+                  )}
+                </div>
+              </div>
             )}
 
             <div className="mb-8">

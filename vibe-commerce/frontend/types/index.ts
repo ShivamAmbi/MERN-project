@@ -21,6 +21,10 @@ export interface MenuItem {
   description: string | null;
   price: number;
   imageUrl: string | null;
+  ingredients: string | null;
+  allergy: string | null;
+  protein: string | null;
+  carbs: string | null;
   categoryId: string;
   category: Category;
   createdAt: string;
